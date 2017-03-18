@@ -1,7 +1,7 @@
 ******************************************************************************
                   TI ARM Linker PC v16.9.0                     
 ******************************************************************************
->> Linked Fri Mar 17 21:40:46 2017
+>> Linked Sat Mar 18 22:57:33 2017
 
 OUTPUT FILE NAME:   <SensorTag_cc2640r2lp_app.out>
 ENTRY POINT SYMBOL: "ResetISR"  address: 00009939
@@ -1568,7 +1568,7 @@ MODULE SUMMARY
     +--+---------------------------------+-------+---------+---------+
        Total:                            1192    0         24     
                                                                   
-    C:\ti\simplelink_cc2640r2_sdk_1_00_00_22\examples\rtos\CC2640R2_LAUNCHXL\blestack\simple_peripheral\tirtos\ccs\config\src\sysbios\rom_sysbios.aem3
+    C:\ti\simplelink_cc2640r2_sdk_1_00_00_22\examples\rtos\CC2640R2_LAUNCHXL\blestack\sensortagx\tirtos\ccs\config\src\sysbios\rom_sysbios.aem3
        rom_sysbios.obj                   706     0         0      
     +--+---------------------------------+-------+---------+---------+
        Total:                            706     0         0      
