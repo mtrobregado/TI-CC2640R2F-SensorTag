@@ -43,6 +43,15 @@
  ******************************************************************************
  Release Name: ble_sdk_2_02_01_18
  Release Date: 2016-10-26 15:20:04
+
+ TI CC2640R2F Sensortag using TI CC2640R2F Launchpad + Educational BoosterPack MKII
+
+ Maker/Author - Markel T. Robregado
+
+ Modification Details : CC2640R2F Launchpad with SensorTag and Key Fob codes
+                        ported from BLE Stack 2.2.1.
+
+ Device Setup: TI CC2640R2F Launchpad + Educational BoosterPack MKII
  *****************************************************************************/
 #ifndef EXCLUDE_BATT
 

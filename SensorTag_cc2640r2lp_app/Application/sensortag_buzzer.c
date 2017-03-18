@@ -42,9 +42,19 @@
  ******************************************************************************
  Release Name: ble_sdk_2_02_01_18
  Release Date: 2016-10-26 15:20:04
+
+ TI CC2640R2F Sensortag using TI CC2640R2F Launchpad + Educational BoosterPack MKII
+
+ Maker/Author - Markel T. Robregado
+
+ Modification Details : CC2640R2F Launchpad with SensorTag and Key Fob codes
+                        ported from BLE Stack 2.2.1.
+
+ Device Setup: TI CC2640R2F Launchpad + Educational BoosterPack MKII
  *****************************************************************************/
 
 #ifndef EXCLUDE_IO
+
 /* -----------------------------------------------------------------------------
 *  Includes
 * ------------------------------------------------------------------------------
@@ -93,7 +103,9 @@ void SensorTagBuzzer_open(PIN_Handle hGpioPin)
     TimerConfigure(GPT0_BASE, TIMER_CFG_SPLIT_PAIR | TIMER_CFG_A_PWM);
 
     // Configure pin for PWM output
+#ifdef Board_BUZZER
     PINCC26XX_setMux(hPin, BP_BUZZER, IOC_PORT_MCU_PORT_EVENT0);
+#endif
 }
 
 
@@ -159,8 +171,9 @@ void SensorTagBuzzer_close(void)
     if (hPin != NULL)
     {
         // Configure pin as GPIO
+#ifdef Board_BUZZER
         PINCC26XX_setMux(hPin, BP_BUZZER, IOC_PORT_GPIO);
-
+#endif
         // Turn off PERIPH power domain and clock for GPT0
         Power_releaseDependency(PowerCC26XX_PERIPH_GPT0);
         Power_releaseConstraint(PowerCC26XX_SB_DISALLOW);

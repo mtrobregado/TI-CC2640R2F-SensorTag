@@ -43,7 +43,17 @@
  ******************************************************************************
  Release Name: ble_sdk_2_02_01_18
  Release Date: 2016-10-26 15:20:04
+
+ TI CC2640R2F Sensortag using TI CC2640R2F Launchpad + Educational BoosterPack MKII
+
+ Maker/Author - Markel T. Robregado
+
+ Modification Details : CC2640R2F Launchpad with SensorTag and Key Fob codes
+                        ported from BLE Stack 2.2.1.
+
+ Device Setup: TI CC2640R2F Launchpad + Educational BoosterPack MKII
  *****************************************************************************/
+
 
 #ifndef SENSORTAG_IO_H
 #define SENSORTAG_IO_H
@@ -66,7 +76,8 @@ extern "C"
  */
 // Consistent LED usage between SensorTag and Launchpad
 #if defined(__CC2650_LAUNCHXL_BOARD_H__) \
-    || defined(__CC1350_LAUNCHXL_BOARD_H__)
+    || defined(__CC1350_LAUNCHXL_BOARD_H__) \
+    || defined(__CC2640R2_LAUNCHXL_BOARD_H__)
 #define IOID_GREEN_LED          Board_GLED
 #define IOID_RED_LED            Board_RLED
 #endif

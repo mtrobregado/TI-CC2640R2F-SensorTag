@@ -42,6 +42,15 @@
  ******************************************************************************
  Release Name: ble_sdk_2_02_01_18
  Release Date: 2016-10-26 15:20:04
+
+ TI CC2640R2F Sensortag using TI CC2640R2F Launchpad + Educational BoosterPack MKII
+
+ Maker/Author - Markel T. Robregado
+
+ Modification Details : CC2640R2F Launchpad with SensorTag and Key Fob codes
+                        ported from BLE Stack 2.2.1.
+
+ Device Setup: TI CC2640R2F Launchpad + Educational BoosterPack MKII
  *****************************************************************************/
 
 
@@ -969,8 +978,14 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
       }
 
       // Turn off LEDs and buzzer
+#ifdef CC2640R2_LAUNCHXL
+      PIN_setOutputValue(hGpioPin, Board_RLED, Board_LED_OFF);
+      PIN_setOutputValue(hGpioPin, Board_GLED, Board_LED_OFF);
+#endif
+#ifdef SENSORTAG_CC2640R2_LAUNCHXL
       PIN_setOutputValue(hGpioPin, BP_BLED, Board_LED_OFF);
       PIN_setOutputValue(hGpioPin, BP_GLED, Board_LED_OFF);
+#endif
 
       SensorTagConnectionControl_update(); //currently EXCLUDE_OAD
     }
@@ -997,7 +1012,12 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
       SensorTag_accelEnablerChangeCB();
 
       // Turn off LED that shows we're advertising.
+#ifdef CC2640R2_LAUNCHXL
+      PIN_setOutputValue(hGpioPin, Board_GLED, Board_LED_OFF);
+#endif
+#ifdef SENSORTAG_CC2640R2_LAUNCHXL
       PIN_setOutputValue(hGpioPin, BP_GLED, Board_LED_OFF);
+#endif
       //SensorTag_resetAllModules();
 
       // Stop alert if it was active.
@@ -1035,7 +1055,12 @@ static void SensorTag_processStateChangeEvt(gaprole_States_t newState)
 
   case GAPROLE_ERROR:
     SensorTag_resetAllModules();
+#ifdef CC2640R2_LAUNCHXL
+    PIN_setOutputValue(hGpioPin, Board_RLED, Board_LED_ON);
+#endif
+#ifdef SENSORTAG_CC2640R2_LAUNCHXL
     PIN_setOutputValue(hGpioPin, BP_BLED, Board_LED_ON);
+#endif
     break;
 
   default:
@@ -1559,8 +1584,14 @@ void SensorTag_stopAlert(void)
   buzzer_state = BUZZER_OFF;
 
   // Turn LED's OFF
-  PIN_setOutputValue(hGpioPin, BP_BLED, Board_LED_OFF);
-  PIN_setOutputValue(hGpioPin, BP_GLED, Board_LED_OFF);
+#ifdef CC2640R2_LAUNCHXL
+      PIN_setOutputValue(hGpioPin, Board_RLED, Board_LED_OFF);
+      PIN_setOutputValue(hGpioPin, Board_GLED, Board_LED_OFF);
+#endif
+#ifdef SENSORTAG_CC2640R2_LAUNCHXL
+      PIN_setOutputValue(hGpioPin, BP_BLED, Board_LED_OFF);
+      PIN_setOutputValue(hGpioPin, BP_GLED, Board_LED_OFF);
+#endif
 }
 
 /*********************************************************************
