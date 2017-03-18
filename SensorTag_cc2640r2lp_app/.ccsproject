@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?ccsproject version="1.0"?>
+<projectOptions>
+	<ccsVersion value="7.0.0"/>
+	<deviceVariant value="Cortex M.CC2640R2F"/>
+	<deviceFamily value="TMS470"/>
+	<deviceEndianness value="little"/>
+	<codegenToolVersion value="16.9.0.LTS"/>
+	<isElfFormat value="true"/>
+	<linkerCommandFile value="cc26xx_app.cmd"/>
+	<rts value="libc.a"/>
+	<createSlaveProjects value=""/>
+	<templateProperties value="id=simple_peripheral_cc2640r2lp_app.projectspec.simple_peripheral_cc2640r2lp_app,type=rtsc,products=com.ti.SIMPLELINK_CC2640R2_SDK,xdcToolsVersion=3.32.01.22,target=ti.targets.arm.elf.M3,platform=ti.platforms.simplelink:CC2640R2F,buildProfile=release,isHybrid=true,configuroOptions=--compileOptions &quot;${COMPILER_FLAGS} &quot; ,"/>
+	<origin value="C:\ti\simplelink_cc2640r2_sdk_1_00_00_22\examples\rtos\CC2640R2_LAUNCHXL\blestack\simple_peripheral\tirtos\ccs\simple_peripheral_cc2640r2lp_app.projectspec"/>
+	<filesToOpen value=""/>
+	<connection value="common/targetdb/connections/TIXDS110_Connection.xml"/>
+	<isTargetManual value="false"/>
+</projectOptions>
