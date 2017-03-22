@@ -69,13 +69,12 @@
 
 #include <ICall.h>
 
-#include "hci_tl.h" //added
+#include "hci_tl.h"
 #include "gatt.h"
-#include "linkdb.h" //added
-//#include "hci.h"
+#include "linkdb.h"
 #include "gapgattserver.h"
 #include "gattservapp.h"
-#include "gatt_profile_uuid.h" // added from keyfob
+#include "gatt_profile_uuid.h"
 #include "gapbondmgr.h"
 #include "osal_snv.h"
 #include "util.h"
@@ -87,10 +86,10 @@
 #include "sensortag.h"
 #include "sensortag_revision.h"
 #include "devinfoservice.h"
-#include "proxreporter.h"  //added
-#include "accelerometer.h" //added
-#include "peripheral.h"    //added
-#include "gapbondmgr.h"    //added
+#include "proxreporter.h"
+#include "accelerometer.h"
+#include "peripheral.h"
+#include "gapbondmgr.h"
 #include "simplekeys.h"
 #include "st_util.h"
 #include "bma250.h"
@@ -109,9 +108,7 @@
 #include "sensortag_buzzer.h"
 #include "sensortag_conn_ctrl.h"
 
-//#include "sensortag_oad.h"
-
-#include "icall_api.h" //Add
+#include "icall_api.h"
 
 /*******************************************************************************
  * CONSTANTS
@@ -122,10 +119,10 @@
 #define BUZZER_MAX_BEEPS                      15
 
 // Buzzer beep tone frequency for "High Alert" (in Hz)
-#define BUZZER_ALERT_HIGH_FREQ                2000//4096
+#define BUZZER_ALERT_HIGH_FREQ                2000
 
 // Buzzer beep tone frequency for "Low Alert" (in Hz)
-#define BUZZER_ALERT_LOW_FREQ                 1200//1800
+#define BUZZER_ALERT_LOW_FREQ                 1200
 
 // How often (in ms) to read the accelerometer
 #define ACCEL_READ_PERIOD                     50
@@ -176,7 +173,6 @@
 // Connection Pause Peripheral time value (in seconds)
 #define DEFAULT_CONN_PAUSE_PERIPHERAL         5 //1 default
 
-/* sensortagProximityState values from Key Fob*/
 // Advertising after initialization or due to terminated link
 #define ST_PROXSTATE_INITIALIZED              0
 
@@ -192,7 +188,6 @@
 // buzzer_state values
 #define BUZZER_OFF                            0
 #define BUZZER_ON                             1
-//keyfob end
 
 // Company Identifier: Texas Instruments Inc. (13)
 #define TI_COMPANY_ID                         0x000D
@@ -243,7 +238,7 @@ ICall_EntityID selfEntityMain;
 
 // Event globally used to post local events and pend on system and
 // local events.
-ICall_SyncHandle syncEvent;    //Add
+ICall_SyncHandle syncEvent;
 
 // Global pin resources
 PIN_State pinGpioState;
@@ -264,7 +259,6 @@ static Char sensorTagTaskStack[ST_TASK_STACK_SIZE];
 
 // Clock instances for internal periodic events.
 static Clock_Struct periodicClock;
-//from keyfob
 static Clock_Struct accelReadClock;
 static Clock_Struct toggleBuzzerClock;
 
@@ -277,7 +271,6 @@ static int8_t  sensortagProxTxPwrLevel = 0;  // Tx Power Level (0dBm default)
 static uint8_t sensortagProximityState;
 
 uint8_t sensortagAlertState;
-// keyfob end
 
 // Queue object used for app messages
 static Queue_Struct appMsg;
@@ -401,14 +394,13 @@ static PIN_Config SensortagAppPinTable[] =
 
 static void SensorTag_init(void);
 static void SensorTag_taskFxn(UArg a0, UArg a1);
-static uint8_t SensorTag_processStackMsg(ICall_Hdr *pMsg); //modified from void
-static uint8_t SensorTag_processGATTMsg(gattMsgEvent_t *pMsg);  //modified from void
+static uint8_t SensorTag_processStackMsg(ICall_Hdr *pMsg);
+static uint8_t SensorTag_processGATTMsg(gattMsgEvent_t *pMsg);
 static void SensorTag_processAppMsg(stEvt_t *pMsg);
 static void SensorTag_processStateChangeEvt(gaprole_States_t newState) ;
 static void SensorTag_processCharValueChangeEvt(uint8_t serviceID, uint8_t paramID) ;
 static void SensorTag_performPeriodicTask(void);
-static void SensorTag_stateChangeCB(gaprole_States_t newState); //check CB
-
+static void SensorTag_stateChangeCB(gaprole_States_t newState);
 static void SensorTag_sendAttRsp(void);
 static void SensorTag_freeAttRsp(uint8_t status);
 
@@ -422,9 +414,8 @@ static void SensorTag_enqueueMsg(uint8_t event, uint8_t serviceID, uint8_t param
 static void SensorTag_callback(PIN_Handle handle, PIN_Id pinId);
 static void SensorTag_setDeviceInfo(void);
 
-//from Key Fob
 static void SensorTag_performAlert(void);
-static void SensorTag_proximityAttrCB(uint8_t attrParamID); //check CB
+static void SensorTag_proximityAttrCB(uint8_t attrParamID);
 static void SensorTag_processProximityAttrEvt(uint8_t attrParamID);
 static void SensorTag_processToggleBuzzerEvt(void);
 static void SensorTag_accelEnablerChangeCB(void);
@@ -525,7 +516,7 @@ static void SensorTag_init(void)
   // ***************************************************************************
   // Register the current thread as an ICall dispatcher application
   // so that the application can send and receive messages.
-  ICall_registerApp(&selfEntityMain, &syncEvent);  //Add
+  ICall_registerApp(&selfEntityMain, &syncEvent);
 
   // added address
   // Hard code the DB Address till CC2650 board gets its own IEEE address
@@ -816,9 +807,6 @@ static void SensorTag_taskFxn(UArg a0, UArg a1)
           SensorTagIO_blinkLed(IOID_GREEN_LED, 1);
         }
       }
-
-      // OAD event queue  from CC2650 Off-Chip
-      //SensorTagOad_processEvent();
     }
   } // task loop
 }
@@ -869,11 +857,6 @@ static void SensorTag_processAppMsg(stEvt_t *pMsg)
     case ST_CHAR_CHANGE_EVT:
       SensorTag_processCharValueChangeEvt(pMsg->serviceID, pMsg->paramID);
       break;
-    /*
-    case ST_PROXIMITY_EVT:
-      SensorTag_processProximityAttrEvt(pMsg->paramID);
-      break;
-    */
 
     default:
       // Do nothing.
@@ -1118,7 +1101,7 @@ static void SensorTag_processCharValueChangeEvt(uint8_t serviceID,
     SensorTagConnControl_processCharChangeEvt(paramID);
     break;
 
-  case SERVICE_ID_PROX:   // added by markel for proxreporter
+  case SERVICE_ID_PROX:
     SensorTag_processProximityAttrEvt(paramID);
     break;
 
@@ -1494,8 +1477,6 @@ static void SensorTag_performAlert(void)
         Util_startClock(&toggleBuzzerClock);
 
         // Turn off LEDs
-        //PIN_setOutputValue(hGpioPin, BP_BLED, Board_LED_OFF);
-        //PIN_setOutputValue(hGpioPin, BP_GLED, Board_LED_OFF);
         SensorTagIO_blinkLed(IOID_GREEN_LED, 1);
         break;
 
@@ -1534,8 +1515,6 @@ static void SensorTag_performAlert(void)
         Util_startClock(&toggleBuzzerClock);
 
         // Turn off LEDs
-        //PIN_setOutputValue(hGpioPin, BP_BLED, Board_LED_OFF);
-        //PIN_setOutputValue(hGpioPin, BP_GLED, Board_LED_OFF);
         SensorTagIO_blinkLed(IOID_GREEN_LED, 1);
         break;
 
@@ -1608,7 +1587,6 @@ void SensorTag_stopAlert(void)
  */
 static void SensorTag_proximityAttrCB(uint8_t attrParamID)
 {
-  //SensorTag_enqueueMsg(ST_PROXIMITY_EVT, attrParamID, NULL); comment out by markel
   SensorTag_charValueChangeCB(SERVICE_ID_PROX, attrParamID);
 }
 

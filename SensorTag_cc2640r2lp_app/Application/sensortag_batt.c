@@ -59,7 +59,7 @@
  * INCLUDES
  */
 #include <ti/sysbios/knl/Clock.h>
-#include <ti/sysbios/knl/Event.h>     //Add
+#include <ti/sysbios/knl/Event.h>
 #include <ti/sysbios/knl/Queue.h>
 
 #include "gatt.h"
@@ -71,7 +71,7 @@
 #include "sensortag.h"
 #include "st_util.h"
 
-#include "icall_api.h" //Add
+#include "icall_api.h"
 
 /*********************************************************************
  * MACROS
@@ -83,7 +83,6 @@
 
 // How often to check battery (milliseconds)
 #define BATT_PERIOD         15000
-//#define BATT_PERIOD         100 for testing
 
 // Battery level is critical when it is less than this %
 #define BATT_CRITICAL_LEVEL 60

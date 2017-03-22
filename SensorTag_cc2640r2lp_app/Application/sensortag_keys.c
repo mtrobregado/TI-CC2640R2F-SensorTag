@@ -61,7 +61,7 @@
  * INCLUDES
  */
 #include <ti/sysbios/knl/Clock.h>
-#include <ti/sysbios/knl/Event.h>     //Add
+#include <ti/sysbios/knl/Event.h>
 
 #include "gatt.h"
 #include "gattservapp.h"
@@ -69,7 +69,7 @@
 #include "sensortag_keys.h"
 #include "sensortag_io.h"
 #include "ioservice.h"
-#include "proxreporter.h"  //added
+#include "proxreporter.h"
 #include "sensortag_factoryreset.h"
 #include "board.h"
 #include "peripheral.h"
@@ -77,7 +77,7 @@
 #include "sensortag_audio.h"
 #include "util.h"
 
-#include "icall_api.h" //Add
+#include "icall_api.h"
 
 /*********************************************************************
  * MACROS

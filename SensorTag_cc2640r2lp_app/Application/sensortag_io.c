@@ -77,7 +77,7 @@
 #include "SensorMpu9250.h"
 #include "SensorUtil.h"
 
-#include "icall_api.h" //Add
+#include "icall_api.h"
 
 /*********************************************************************
  * MACROS

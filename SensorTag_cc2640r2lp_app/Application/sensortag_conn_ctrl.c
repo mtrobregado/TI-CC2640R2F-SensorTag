@@ -71,7 +71,7 @@
 #include "board.h"
 #include "peripheral.h"
 
-#include "icall_api.h" //Add
+#include "icall_api.h"
 
 /*******************************************************************************
  * MACROS
