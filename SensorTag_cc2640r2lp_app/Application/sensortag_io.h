@@ -87,7 +87,6 @@ extern "C"
 #define IOID_RED_LED            BP_BLED
 #endif
 
-
 #if defined(__CC2650STK_SENSORTAG_BOARD_H__)
 #define IOID_GREEN_LED          Board_STK_LED2
 #define IOID_RED_LED            Board_STK_LED1

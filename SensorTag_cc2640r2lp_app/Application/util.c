@@ -5,12 +5,12 @@
  @brief This file contains utility functions commonly used by
         BLE applications for CC26xx with TIRTOS.
 
- Group: WCS, BTS
+ Group: CMCU, SCS
  Target Device: CC2640R2
 
  ******************************************************************************
  
- Copyright (c) 2014-2016, Texas Instruments Incorporated
+ Copyright (c) 2014-2017, Texas Instruments Incorporated
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -41,8 +41,8 @@
  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
  ******************************************************************************
- Release Name: ti-ble-3.0-stack-sdk_3_00_00
- Release Date: 2016-12-21 12:44:47
+ Release Name: simplelink_cc2640r2_sdk_1_30_00_25
+ Release Date: 2017-03-02 20:08:35
  *****************************************************************************/
 
 /*********************************************************************

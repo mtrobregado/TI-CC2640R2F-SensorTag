@@ -116,7 +116,7 @@
 
 //keyfob add
 // Number of beeps before buzzer stops by itself
-#define BUZZER_MAX_BEEPS                      15
+#define BUZZER_MAX_BEEPS                      5
 
 // Buzzer beep tone frequency for "High Alert" (in Hz)
 #define BUZZER_ALERT_HIGH_FREQ                2000

@@ -66,6 +66,7 @@
 #include "sensortag_io.h"
 #include "ioservice.h"
 #include "sensortag_buzzer.h"
+#include "sensortag_playtune.h"
 #ifdef FACTORY_IMAGE
 #include "sensortag_factoryreset.h"
 #include "ExtFlash.h"
@@ -89,6 +90,9 @@
 #define IO_DATA_LED1            0x01 // Red
 #define IO_DATA_LED2            0x02 // Green
 #define IO_DATA_BUZZER          0x04
+#define PLAY_HAPPY_BIRTHDAY     0x08
+#define PLAY_MARIO              0x10
+#define PLAY_UNDERWORLD_MARIO   0x20
 
 #ifdef FACTORY_IMAGE
 #define IO_DATA_EXT_FLASH_ERASE 0x08
@@ -239,6 +243,32 @@ void SensorTagIO_processCharChangeEvt(uint8_t paramID)
       SensorTagBuzzer_close();
     }
 #endif
+    if (!!(ioValue & PLAY_HAPPY_BIRTHDAY))
+    {
+      playbirthdaytune();
+    }
+    else
+    {
+      SensorTagBuzzer_close();
+    }
+
+    if (!!(ioValue & PLAY_MARIO))
+    {
+      playmariotune();
+    }
+    else
+    {
+      SensorTagBuzzer_close();
+    }
+
+    if (!!(ioValue & PLAY_UNDERWORLD_MARIO))
+    {
+      playmariounderworldtune();
+    }
+    else
+    {
+      SensorTagBuzzer_close();
+    }
 #ifdef FACTORY_IMAGE
     if (!!((ioValue & IO_DATA_EXT_FLASH_ERASE)))
     {
