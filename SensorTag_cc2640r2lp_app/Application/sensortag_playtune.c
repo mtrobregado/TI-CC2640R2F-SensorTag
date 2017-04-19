@@ -17,7 +17,7 @@
  Dipto Pratyaksa for the Mario Brothers Main Theme and Underworld Melody
  http://www.linuxcircle.com/2013/03/31/playing-mario-bros-tune-with-arduino-and-piezo-buzzer/
 
- ******************************************************************************/
+******************************************************************************/
 
 #include <stdio.h>
 
@@ -166,6 +166,97 @@ int birthdaynoteDurations[] = {
     2, 1
 };
 
+int konami_melody[] = {
+	NOTE_F2, NOTE_C6, NOTE_B5, NOTE_G5, NOTE_A5, NOTE_E1, NOTE_B1, NOTE_E1, NOTE_B1, NOTE_E1, NOTE_B1,    
+
+	NOTE_G6, NOTE_F6, NOTE_DS6, NOTE_C6, NOTE_AS5, NOTE_C6, NOTE_AS5, NOTE_GS5, NOTE_G5, NOTE_GS5, 
+	NOTE_G5, NOTE_F5, NOTE_DS5, NOTE_F5, NOTE_AS4, NOTE_C5, NOTE_DS5, NOTE_F5,
+
+	NOTE_C6, NOTE_NOTONE, NOTE_AS5, NOTE_C6, NOTE_D6, NOTE_DS6, NOTE_F5,
+	NOTE_C6, NOTE_NOTONE, NOTE_AS5, NOTE_C6, NOTE_D6, NOTE_GS5, NOTE_F5,
+	// Repeat once   
+	NOTE_C6, NOTE_NOTONE, NOTE_AS5, NOTE_C6, NOTE_D6, NOTE_DS6, NOTE_F5,
+	NOTE_C6, NOTE_NOTONE, NOTE_AS5, NOTE_C6, NOTE_D6, NOTE_GS5, NOTE_F5,
+
+	NOTE_C6, NOTE_NOTONE, NOTE_C6, NOTE_D6, NOTE_DS6, NOTE_NOTONE, NOTE_DS6, NOTE_NOTONE,
+	NOTE_G5, NOTE_AS5, NOTE_C6, NOTE_D6, NOTE_NOTONE, NOTE_D6, NOTE_DS6,
+
+	NOTE_C6, NOTE_NOTONE, NOTE_C6, NOTE_NOTONE, NOTE_DS6, NOTE_F6  
+};
+
+
+int konaminoteDurations[] = {
+	2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1,         // 11 start screen  notes
+
+	16, 16, 16, 16, 16, 16, 16, 16, 16, 16,  // 20  notes
+	16, 16, 16, 16, 16, 16, 16, 2,           // for both lines   
+
+	16, 16, 16, 8, 16, 2, 2,                 // 7
+	16, 16, 16, 8, 16, 2, 2,                 // 7
+
+	// Repeat once
+	16, 16, 16, 8, 16, 2, 2,                 // 7
+	16, 16, 16, 8, 16, 2, 2,                 // 7
+
+	16, 16, 4, 4, 16, 16, 16, 8,             // 8
+	16, 16, 16, 16, 16, 4, 4,                // 7
+
+	16, 16, 16, 16, 16, 4                    // 6 
+};
+
+int got_melody[] = {
+    NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4, NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4,
+    NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4, NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4,
+
+    NOTE_G4, NOTE_C4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C4, NOTE_E4, NOTE_F4,
+    NOTE_G4, NOTE_C4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_C4, NOTE_E4, NOTE_F4,
+
+    NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4, NOTE_D4,
+
+    NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4, NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4,
+    NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4,
+
+    NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4,
+
+    NOTE_F4, NOTE_AS3, NOTE_DS4, NOTE_D4,
+
+    NOTE_F4, NOTE_AS3, NOTE_DS4, NOTE_D4, NOTE_C4,
+
+    NOTE_GS3, NOTE_AS3, NOTE_C4, NOTE_F3, NOTE_GS3, NOTE_AS3, NOTE_C4, NOTE_F3,
+    NOTE_GS3, NOTE_AS3, NOTE_C4, NOTE_F3,
+
+    NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4, NOTE_G4, NOTE_C4, NOTE_DS4, NOTE_F4,
+    NOTE_D4,
+
+    NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4, NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4,
+    NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4, NOTE_G3, NOTE_AS3, NOTE_C4, NOTE_D4
+};
+
+int gotDurations[] = {
+    2, 2, 4, 4, 2, 2, 4, 4,
+    2, 2, 4, 4, 2, 2, 4, 4,
+
+    2, 2, 4, 4, 2, 2, 4, 4,
+    2, 2, 4, 4, 2, 2, 4, 4,
+
+    2, 2, 4, 4, 2,
+
+    2, 4, 4, 2, 2, 4, 4, 2,
+    2, 4, 4, 2,
+
+    2, 4, 4, 1,
+
+    1, 1, 4, 4, 1, 1, 4, 4, 2,
+
+    4, 4, 2, 2, 4, 4, 2, 2,
+    4, 4, 2, 2,
+
+    1, 1, 4, 4, 1, 1, 4, 4, 2,
+
+    2, 4, 4, 2, 2, 4, 4, 2,
+    2, 4, 4, 2, 2, 4, 4, 2
+};
+
 void playbirthdaytune(void)
 {	
 	for(thisNote = 0; thisNote < 26; thisNote++)
@@ -217,7 +308,7 @@ void playmariounderworldtune(void)
        // to calculate the note duration, take one second
        // divided by the note type.
        //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-       int noteDuration = 1000 / mario_underworld_tempo[thisNote];
+       noteDuration = 1000 / mario_underworld_tempo[thisNote];
        tone(mario_underworld_melody[thisNote], noteDuration);
 
        // to distinguish the notes, set a minimum time between them.
@@ -229,6 +320,230 @@ void playmariounderworldtune(void)
        noTone();                
     }
 }
+
+void playkonamitune(void)
+{	
+    arraysize = sizeof(konami_melody) / sizeof(int);
+	
+	for (thisNote = 0; thisNote < arraysize; thisNote++)
+	{
+
+       // to calculate the note duration, take one second
+       // divided by the note type.
+       //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+	   // Had to down tempo to 100/150 
+       noteDuration = 1500 / konaminoteDurations[thisNote];
+       tone(konami_melody[thisNote], noteDuration);
+
+       // to distinguish the notes, set a minimum time between them.
+       // the note's duration + 30% seems to work well:
+       pauseBetweenNotes = noteDuration + 50;
+       DELAY_MS(pauseBetweenNotes);
+
+       // stop the tone playing:
+       noTone();                
+    }
+}
+
+void playgameofthrones(void)
+{
+    arraysize = sizeof(got_melody) / sizeof(int);
+
+    for (thisNote = 0; thisNote < arraysize; thisNote++)
+    {
+       // to calculate the note duration, take one second
+       // divided by the note type.
+       //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+       // Had to down tempo to 100/150
+       noteDuration = 1000 / gotDurations[thisNote];
+       tone(got_melody[thisNote], noteDuration);
+
+       // to distinguish the notes, set a minimum time between them.
+       // the note's duration + 30% seems to work well:
+       pauseBetweenNotes = noteDuration + 70;
+       DELAY_MS(pauseBetweenNotes);
+
+       // stop the tone playing:
+       noTone();
+    }
+
+}
+
+
+
+#if 0
+void GameOfThrones()
+{
+    for(int i=0; i<4; i++) //ok
+    {
+        tone(speakerPin, NOTE_G4);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_C4);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_DS4);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_F4);
+        delay(250);
+        noTone(speakerPin);
+    }
+
+    for(int i=0; i<4; i++) //ok
+    {
+        tone(speakerPin, NOTE_G4);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_C4);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_E4);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_F4);
+        delay(250);
+        noTone(speakerPin);
+    }
+
+    tone(speakerPin, NOTE_G4); //ok
+    delay(500);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_C4);
+    delay(500);
+    tone(speakerPin, NOTE_DS4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_F4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_D4);
+    delay(500);
+    noTone(speakerPin);
+
+    for(int i=0; i<3; i++)
+    {
+        tone(speakerPin, NOTE_G3);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_AS3);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_C4);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_D4);
+        delay(500);
+        noTone(speakerPin);
+    }//
+
+    tone(speakerPin, NOTE_G3); //ok
+    delay(500);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_AS3);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_C4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_D4);
+    delay(1000);
+    noTone(speakerPin);
+
+    tone(speakerPin, NOTE_F4); //ok
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_AS3);
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_DS4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_D4);
+    delay(250);
+    noTone(speakerPin);
+
+    tone(speakerPin, NOTE_F4); //ok
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_AS3);
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_DS4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_D4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_C4);
+    delay(500);
+    noTone(speakerPin);
+
+    for(int i=0; i<3; i++)
+    {
+        tone(speakerPin, NOTE_GS3); //ok
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_AS3);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_C4);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_F3);
+        delay(500);
+        noTone(speakerPin);
+    }
+
+    tone(speakerPin, NOTE_G4); //ok
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_C4);
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_DS4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_F4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_G4);
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_C4);
+    delay(1000);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_DS4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_F4);
+    delay(250);
+    noTone(speakerPin);
+    tone(speakerPin, NOTE_D4);
+    delay(500);
+    noTone(speakerPin);
+
+    for(int i=0; i<4; i++)
+    {
+        tone(speakerPin, NOTE_G3);
+        delay(500);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_AS3);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_C4);
+        delay(250);
+        noTone(speakerPin);
+        tone(speakerPin, NOTE_D4);
+        delay(500);
+        noTone(speakerPin);
+    }
+}
+#endif
+
+
+
+
 
 void tone(unsigned int frequency, unsigned long duration)
 {

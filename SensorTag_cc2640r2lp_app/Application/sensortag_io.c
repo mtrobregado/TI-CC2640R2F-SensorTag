@@ -90,9 +90,12 @@
 #define IO_DATA_LED1            0x01 // Red
 #define IO_DATA_LED2            0x02 // Green
 #define IO_DATA_BUZZER          0x04
+
 #define PLAY_HAPPY_BIRTHDAY     0x08
 #define PLAY_MARIO              0x10
 #define PLAY_UNDERWORLD_MARIO   0x20
+#define PLAY_KONAMI             0x40
+#define PLAY_GOT                0x80
 
 #ifdef FACTORY_IMAGE
 #define IO_DATA_EXT_FLASH_ERASE 0x08
@@ -264,6 +267,24 @@ void SensorTagIO_processCharChangeEvt(uint8_t paramID)
     if (!!(ioValue & PLAY_UNDERWORLD_MARIO))
     {
       playmariounderworldtune();
+    }
+    else
+    {
+      SensorTagBuzzer_close();
+    }
+
+    if (!!(ioValue & PLAY_KONAMI))
+    {
+      playkonamitune();
+    }
+    else
+    {
+      SensorTagBuzzer_close();
+    }
+
+    if (!!(ioValue & PLAY_GOT))
+    {
+      playgameofthrones();
     }
     else
     {

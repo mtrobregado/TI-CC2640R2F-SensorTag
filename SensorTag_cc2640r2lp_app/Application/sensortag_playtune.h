@@ -33,6 +33,8 @@ extern "C"
  extern void playbirthdaytune(void);
  extern void playmariotune(void);
  extern void playmariounderworldtune(void);
+ extern void playkonamitune(void);
+ extern void playgameofthrones(void);
 
 
 #ifdef __cplusplus
